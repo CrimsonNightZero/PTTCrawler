@@ -28,17 +28,17 @@ class SQlite_Operator():
     
         c = conn.cursor()
         
-        if self.db == "Tweet.db":
+        if self.db == r"Data/Tweet.db":   
             c.execute("CREATE TABLE " + self.table + " (id integer PRIMARY KEY AUTOINCREMENT NOT NULL, \
                       authorId text, authorName text, title text, \
                       publishedTime integer, content text, canonicalUrl text, \
                     createdTime text, updateTime text)")
        
-        elif self.db == "Comment.db":
+        elif self.db == r"Data/Comment.db":
             c.execute("CREATE TABLE " + self.table + " (tweet_id integer, commentId text, \
                       commentContent text, commentTime integer)")
                 
-        elif self.db == "Log.db":
+        elif self.db == r"Data/Log.db":
             c.execute("CREATE TABLE " + self.table + " (id integer PRIMARY KEY AUTOINCREMENT NOT NULL, \
                       urlIndex integer)")
         
@@ -50,13 +50,13 @@ class SQlite_Operator():
     def check_row(self, row_filter):
         conn = sqlite3.connect(self.db)
         c = conn.cursor()
-        if self.db == "Tweet.db": 
+        if self.db == r"Data/Tweet.db": 
             row_filter = "publishedTime ='" + row_filter[0] + "' AND canonicalUrl ='" + row_filter[1] + "'"
         
-        elif self.db == "Comment.db":
+        elif self.db == r"Data/Comment.db":
             row_filter = "commentId ='" + row_filter[0] + "' AND commentContent ='" + row_filter[1].replace("'", "''") + "'"
         
-        elif self.db == "Log.db":
+        elif self.db == r"Data/Log.db":
             row_filter = "urlIndex ='" + row_filter[0] + "'"
             
         c.execute("SELECT * FROM  " + self.table + "  WHERE " + row_filter)
@@ -131,13 +131,13 @@ class SQlite_Operator():
         conn = sqlite3.connect(self.db)
 
         c = conn.cursor()
-        if self.db == "Tweet.db":
+        if self.db == r"Data/Tweet.db":
             col = "authorId, authorName, title, publishedTime, content, canonicalUrl, createdTime , updateTime"
             
-        elif self.db == "Comment.db":
+        elif self.db == r"Data/Comment.db":
             col = "tweet_id, commentId, commentContent, commentTime"
             
-        elif self.db == "Log.db":
+        elif self.db == r"Data/Log.db":
             col = "urlIndex"
         
         c.execute("INSERT INTO  " + self.table + "(" + col + ")  VALUES (" + data +")")

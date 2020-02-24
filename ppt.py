@@ -8,6 +8,8 @@ Created on Mon Feb 17 16:04:20 2020
 import re
 from Module.PPTSearch import PPTSearch
 from Module.SQliteOperator import SQlite_Operator
+import argparse
+
 
 # PPT Controller
 # headers -> 標頭存取 'User-Agent': 模擬真實使用者環境, 'cookie': 通過over18頁面認證
@@ -70,7 +72,7 @@ class PTTCrawler():
     # 檢查看板Index
     # 取得已搜索過的看板Index，確認是否已搜尋過
     def check_board_log(self, board):
-        sql = SQlite_Operator("Log.db", board)
+        sql = SQlite_Operator(r"Data/Log.db", board)
         print("Already search index:")
         print(sql.get_all_url_index())
 
@@ -79,22 +81,29 @@ class PTTCrawler():
 # RangeSearch 搜尋指定範圍內的看板 : start_index -> 起始index, end_index -> 範圍
 # CheckBoardLog 檢查看板Index : board -> 給定搜索的看板名
 if __name__ == '__main__':
-    board_url = input('請輸入您要搜索的網址:\n') or "https://www.ptt.cc/bbs/Gossiping/index.html"
-    
     print("Data mode : 1.SingleSearch 2.NewstSearch 3.RangeSearch 4.CheckBoardLog")
-    
-    run_mode = input('請輸入您要使用的模式:\n') or "RangeSearch"
-    
-    pptcrawler = PTTCrawler(board_url, 10)
 
-    if run_mode == "1" or run_mode == "SingleSearch":
+    parser = argparse.ArgumentParser(description='this script')
+    parser.add_argument('--board_url', type=str, default = "https://www.ptt.cc/bbs/Gossiping/index.html")
+    parser.add_argument('--run_mode', type=str, default = "1")
+    parser.add_argument('--start_index', type=int, default= 30000)
+    parser.add_argument('--end_index', type=int, default= 5)
+    parser.add_argument('--board', type=str, default= "Gossiping")
+    parser.add_argument('--res_time', type=int, default = 20)
+    args = parser.parse_args()
+    
+    pptcrawler = PTTCrawler(args.board_url, args.res_time)
+    if args.run_mode == "1" or args.run_mode == "SingleSearch":
+        print("Start: SingleSearch")
         pptcrawler.single_search()
-    elif run_mode == "2" or run_mode == "NewstSearch":
+    elif args.run_mode == "2" or args.run_mode == "NewstSearch":
+        print("Start: NewstSearch")
         pptcrawler.newst_search()
-    elif run_mode == "3" or run_mode == "RangeSearch":
-        start_index = input('請輸入起始index:\n') or 30000
-        end_index = input('請輸入範圍:\n') or 5
-        pptcrawler.range_search(start_index, end_index)
-    elif run_mode == "4" or run_mode == "CheckBoardLog":
-        board = input('請輸入任意看版名:\n') or "Gossiping"
-        pptcrawler.check_board_log(board)
+    elif args.run_mode == "3" or args.run_mode == "RangeSearch":
+        print("Start: RangeSearch")
+        pptcrawler.range_search(args.start_index, args.end_index)
+    elif args.run_mode == "4" or args.run_mode == "CheckBoardLog":
+        print("Start: CheckBoardLog")
+        pptcrawler.check_board_log(args.board)
+    print("Finish")
+        

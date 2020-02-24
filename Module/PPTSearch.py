@@ -143,7 +143,7 @@ class PPTSearch():
         self.createdTime = localtime
         self.updateTime = localtime
         
-        self.fast_insert('Tweet.db', self.board)
+        self.fast_insert(r'Data/Tweet.db', self.board)
         
         for push in article_soup.select('.push'):
             if not push.select('.f3.hl.push-userid'):
@@ -175,9 +175,11 @@ class PPTSearch():
      
                 self.commentTime, timeArray = self.get_timestamp(commentTime, "%m/%d %H:%M %Y")
             
-            sql = SQlite_Operator('Tweet.db', self.board)
+            sql = SQlite_Operator(r'Data/Tweet.db', self.board)
             self.tweet_id = sql.get_id(self.publishedTime, self.canonicalUrl)
-            self.fast_insert('Comment.db', self.board)
+            self.fast_insert(r'Data/Comment.db', self.board)
+        article_no =  article_url.split('/')[-1].replace(".html", "")
+        print("Check article number: ", article_no)
             
     # 轉換時間戳並修正格式
     def get_timestamp(self, datatime ,time_format):
@@ -196,16 +198,16 @@ class PPTSearch():
         if not sql.check_table():
             sql.create()
         
-        if db == "Tweet.db": 
+        if db == r"Data/Tweet.db": 
             row_filter = [self.publishedTime, self.canonicalUrl]
             row_data = [self.authorId, self.authorName, self.title, self.publishedTime, \
                           self.content, self.canonicalUrl, self.createdTime, self.updateTime]
         
-        elif db == "Comment.db":
+        elif db == r"Data/Comment.db":
             row_filter = [self.commentId, self.commentContent]
             row_data = [self.tweet_id, self.commentId, self.commentContent, self.commentTime]
 
-        elif db == "Log.db":
+        elif db == r"Data/Log.db":
             row_filter = [self.url_index]
             row_data = [self.url_index]
             
@@ -223,4 +225,4 @@ class PPTSearch():
     # 存取日誌資料庫
     def write_log(self, index):
         self.url_index = index
-        self.fast_insert('Log.db', self.board)
+        self.fast_insert(r'Data/Log.db', self.board)
