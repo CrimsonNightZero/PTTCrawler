@@ -39,9 +39,13 @@ Main program : ppt.py
 * NewstSearch 從目前看板Index搜尋到最新的
 * RangeSearch 搜尋指定範圍內的看板 : start_index -> 起始index, end_index -> 範圍
 * CheckBoardLog 檢查看板Index : board -> 給定搜索的看板名
+
 PPTSearch.py : PPT網頁搜索
+
 SQliteOperator.py : 對於sqlite資料庫操作
+
 Directory Data: Data sharing between Host and container
+
 Dockerfile
 * --board_url : Board url
 * --run_mode : Select mode
