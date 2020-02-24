@@ -34,12 +34,24 @@ docker exec -it "container"(cbb76a7805fe)  bash : Operation docker
 
 Program summary
 -----------------
-* Main program : ppt.py
-* PPTSearch.py : PPT網頁搜索
-* SQliteOperator.py : 對於sqlite資料庫操作
-* Directory Data: Data sharing between Host and container
+Main program : ppt.py
+* SingleSearch 搜尋單一頁面
+* NewstSearch 從目前看板Index搜尋到最新的
+* RangeSearch 搜尋指定範圍內的看板 : start_index -> 起始index, end_index -> 範圍
+* CheckBoardLog 檢查看板Index : board -> 給定搜索的看板名
+PPTSearch.py : PPT網頁搜索
+SQliteOperator.py : 對於sqlite資料庫操作
+Directory Data: Data sharing between Host and container
+Dockerfile
+* --board_url : Board url
+* --run_mode : Select mode
+* --start_index : start index 
+* --end_index : end range
+* --board : Select ppt board
+* --res_time : Delay time
+* CMD [ "python", "./ppt.py", "--board_url=https://www.ptt.cc/bbs/Gossiping/index.html", "--run_mode=1", "--start_index=30000", "--end_index=5", "--board=Gossiping", "--res_time=20"]
 
-* Result:
+Result:
 * ![Crawler](./Figures/Crawler.PNG)
 
 Data
