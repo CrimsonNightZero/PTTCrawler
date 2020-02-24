@@ -27,6 +27,11 @@ Step 4. Run project
 
 docker system prune : clean ((REPOSITORY == None) and (TAG == None))
 
+docker ps : find running container
+
+docker exec -it "container"(cbb76a7805fe)  bash : Operation docker
+
+
 Program summary
 -----------------
 * Main program : ppt.py
