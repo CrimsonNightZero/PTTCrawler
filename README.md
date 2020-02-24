@@ -44,18 +44,18 @@ PPTSearch.py : PPT網頁搜索
 
 SQliteOperator.py : 對於sqlite資料庫操作
 
-Directory Data: Data sharing between Host and container
+Directory Data : Data sharing between Host and container
 
 Dockerfile
 * --board_url : Board url
 * --run_mode : Select mode
-* --start_index : start index 
-* --end_index : end range
+* --start_index : Start index 
+* --end_index : End range
 * --board : Select ppt board
-* --res_time : Delay time
+* --res_time : Delayed request time
 * CMD [ "python", "./ppt.py", "--board_url=https://www.ptt.cc/bbs/Gossiping/index.html", "--run_mode=1", "--start_index=30000", "--end_index=5", "--board=Gossiping", "--res_time=20"]
 
-Result:
+Result :
 * ![Crawler](./Figures/Crawler.PNG)
 
 Data
